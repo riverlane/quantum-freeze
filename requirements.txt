@@ -1,0 +1,5 @@
+pygame
+numpy
+pytmx
+pyquil
+bitarray

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="1.1.6" orientation="orthogonal" renderorder="right-down" width="16" height="12" tilewidth="64" tileheight="64" infinite="0" nextobjectid="1">
+ <tileset firstgid="1" source="../../../River lane internship/Frozen Lake/icytiles2.tsx"/>
+ <tileset firstgid="13" source="../../../River lane internship/Frozen Lake/icytiles.tsx"/>
+ <layer name="Tile Layer 1" width="16" height="12">
+  <data encoding="csv">
+9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,
+9,3,4,5,6,10,11,11,11,11,9,10,10,9,10,9,
+9,3221225477,3221225476,3221225475,10,11,11,11,11,9,3,4,5,6,10,9,
+9,3,4,10,10,11,11,11,9,10,3,4,5,6,9,9,
+9,5,11,11,11,11,11,9,10,10,3,4,5,6,10,9,
+9,11,11,11,11,11,9,10,10,9,10,10,9,10,10,9,
+9,11,11,11,11,9,10,10,9,10,10,9,10,10,9,9,
+9,11,11,11,9,10,10,9,10,10,9,10,10,9,10,9,
+9,11,11,9,10,10,9,10,10,9,10,10,9,10,10,9,
+9,3,4,5,6,9,10,10,9,10,10,9,10,10,9,9,
+9,3,4,5,6,10,10,9,10,10,9,10,10,9,10,9,
+9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9
+</data>
+ </layer>
+</map>
