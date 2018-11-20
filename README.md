@@ -10,4 +10,4 @@ Safely navigate your penguin across a frozen lake avoiding the hidden holes! You
 
 
 ## Contributors
-Frozen Lake was developed by Sam Coward and Tom Parks with numerous suggestions for levels from the rest of the Riverlane team!
+The Quantum Freeze was developed by Sam Coward and Tom Parks with numerous suggestions for levels from the rest of the Riverlane team!
