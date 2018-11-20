@@ -7,3 +7,7 @@ Safely navigate your penguin across a frozen lake avoiding the hidden holes! You
 1. Install Rigetti's QVM and quilc compiler. You will recieve the link to download both programs when you sign up for QCS.
 2. Pull this repository, install the requirements.txt, and run with `./QuantumFreeze`.
 5. Enjoy!
+
+
+## Contributors
+Frozen Lake was developed by Sam Coward and Tom Parks with numerous suggestions for levels from the rest of the Riverlane team!
