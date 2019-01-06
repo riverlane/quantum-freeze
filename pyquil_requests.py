@@ -24,8 +24,8 @@ class QThread(threading.Thread):
         self.simulator = sim
         self.qc = get_qc("9q-square-qvm")
         self.qubits = None
-        self.compprocess = sp.Popen(["quilc", "-S"], close_fds=True)
-        self.servprocess = sp.Popen(["qvm", "-S"], close_fds=True)
+        # self.compprocess = sp.Popen(["quilc", "-S"], close_fds=True)
+        # self.servprocess = sp.Popen(["qvm", "-S"], close_fds=True)
 
 
     def run(self):

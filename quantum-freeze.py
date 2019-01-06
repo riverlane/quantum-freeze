@@ -73,13 +73,18 @@ class Game:
 
     def game_intro(self):
         intro = True
+        print("loading bg")
         background_image = pg.image.load('resources/snow_scene.png')
+        print("scale bg")
         background_image = pg.transform.scale(background_image, (1200, 774))
         while intro:
+            print("blitting")
             self.screen.blit(background_image, [-5, -5])
 
+            print("messages")
             self.message_to_screen("The Quantum Freeze",PURPLE,(WIDTH/2),(HEIGHT/2)-100,size="large")
             self.message_to_screen("Press space to play", BLACK, (WIDTH/2),(HEIGHT/2)+80)
+            print("wait for event")
             for event in pg.event.get():
                 if event.type == pg.QUIT:
                     pg.quit()
@@ -120,20 +125,23 @@ class Game:
 
 
     def message_to_screen(self,msg, color,pos_x,pos_y, size="small",corner = "center"):
-                textSurf, textRect = self.text_objects(msg, color, size)
-                if corner =="left":
-                    textRect.x = pos_x
-                    textRect.y = pos_y
-                else:
-                    textRect.center = pos_x,pos_y
-                self.screen.blit(textSurf, textRect)
+        print("print msg, get text obj")
+        textSurf, textRect = self.text_objects(msg, color, size)
+        if corner =="left":
+            textRect.x = pos_x
+            textRect.y = pos_y
+        else:
+            textRect.center = pos_x,pos_y
+        print("blitting in msg_to_screen")
+        self.screen.blit(textSurf, textRect)
 
     def text_objects(self,text, color, size):
-        smallerfont = pg.font.SysFont("Iceland", 37)
-        smallfont = pg.font.SysFont("Iceland", 50)
-        mederfont = pg.font.SysFont("Iceland", 70)
-        medfont = pg.font.SysFont("Iceland", 100)
-        largefont = pg.font.SysFont("Iceland", 120)
+        print("getting fornts")
+        smallerfont = pg.font.Font("resources/Iceland-Regular.ttf", 37)
+        smallfont = pg.font.Font("resources/Iceland-Regular.ttf", 50)
+        mederfont = pg.font.Font("resources/Iceland-Regular.ttf", 70)
+        medfont = pg.font.Font("resources/Iceland-Regular.ttf", 100)
+        largefont = pg.font.Font("resources/Iceland-Regular.ttf", 120)
         if size == "smaller":
                 textSurface = smallerfont.render(text,True,color)
         elif size == "small":
@@ -612,6 +620,8 @@ class Game:
                                                             g.run()
                                                             g.show_go_screen()
 
+import pdb
+
 
 try:
     level_idx = sys.argv.index("-l")+1
@@ -619,14 +629,22 @@ try:
 except ValueError:
     level = 0
 # create the game object
+print("created game")
 qthread = QThread()
+print("startred game")
+
 qthread.start()
 g = Game(qthread=qthread, level=level)
+print("showing start screen")
 g.show_start_screen()
-# Game loop
+# # Game loop
 while True:
+    print("intro")
     g.game_intro()
+    print("instructions")
     g.game_instructions()
+    print("new")
     g.new()
+    print("run")
     g.run()
     g.show_go_screen()
