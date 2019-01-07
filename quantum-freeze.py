@@ -621,8 +621,8 @@ class Game:
                                                             g.run()
                                                             g.show_go_screen()
 
-import pdb
-
+def quit():
+   sys.exit(0)
 
 try:
     level_idx = sys.argv.index("-l")+1
@@ -640,12 +640,12 @@ print("showing start screen")
 g.show_start_screen()
 # # Game loop
 while True:
-    print("intro")
-    g.game_intro()
-    print("instructions")
-    g.game_instructions()
-    print("new")
-    g.new()
-    print("run")
-    g.run()
-    g.show_go_screen()
+    try:
+        g.game_intro()
+        g.game_instructions()
+        g.new()
+        g.run()
+        g.show_go_screen()
+    except Exception as e:
+        if DEBUG:
+            raise e
