@@ -1,8 +1,18 @@
 #!/usr/bin/env python3
 import pygame as pg
-import os
+import os, sys
+
+is_frozen = getattr(sys, 'frozen', False)
+frozen_temp_path = getattr(sys, '_MEIPASS', '')
+# This is needed to find resources when using pyinstaller
+if is_frozen:
+    basedir = frozen_temp_path
+else:
+    basedir = os.path.dirname(os.path.abspath(__file__))
+def getfilepath(fname):
+    return basedir + "/resources/" + fname
+
 import numpy
-import sys
 from collections import defaultdict, OrderedDict
 from math import copysign
 import pytmx
@@ -56,18 +66,18 @@ class Game:
 
         self.load_data()
         self.lose = False
-        background_image= pg.image.load('resources/snow_scene.png')
+        background_image= pg.image.load(getfilepath('snow_scene.png'))
 
 
     #Load map file into folder
     def load_data(self):
         game_folder = path.dirname(__file__)
         self.map_data = []
-        self.map = TiledMap('resources/game_map{}.tmx'.format(self.level))
+        self.map = TiledMap(getfilepath('game_map{}.tmx'.format(self.level)))
 
         self.map_img = self.map.make_map()
         self.map_rect = self.map_img.get_rect()
-        with open(path.join(game_folder, 'resources/map{}.txt'.format(self.level)), 'rt') as f:
+        with open(path.join(game_folder, getfilepath('map{}.txt'.format(self.level))), 'rt') as f:
             for line in f:
                 self.map_data.append(line)
 
@@ -75,7 +85,7 @@ class Game:
     def game_intro(self):
         intro = True
         if DEBUG: print("loading bg")
-        background_image = pg.image.load('resources/snow_scene.png')
+        background_image = pg.image.load(getfilepath('snow_scene.png'))
         if DEBUG: print("scale bg")
         background_image = pg.transform.scale(background_image, (1200, 774))
         while intro:
@@ -98,7 +108,7 @@ class Game:
             self.clock.tick(15)
     def game_instructions(self):
         instruct=True
-        background_image = pg.image.load('resources/snow_scene.png').convert()
+        background_image = pg.image.load(getfilepath('snow_scene.png')).convert()
         background_image = pg.transform.scale(background_image, (1200, 774))
         while instruct:
 
@@ -138,11 +148,11 @@ class Game:
 
     def text_objects(self,text, color, size):
         if DEBUG: print("getting fornts")
-        smallerfont = pg.font.Font("resources/Iceland-Regular.ttf", 37)
-        smallfont = pg.font.Font("resources/Iceland-Regular.ttf", 50)
-        mederfont = pg.font.Font("resources/Iceland-Regular.ttf", 70)
-        medfont = pg.font.Font("resources/Iceland-Regular.ttf", 100)
-        largefont = pg.font.Font("resources/Iceland-Regular.ttf", 120)
+        smallerfont = pg.font.Font(getfilepath('Iceland-Regular.ttf'), 37)
+        smallfont = pg.font.Font(getfilepath('Iceland-Regular.ttf'), 50)
+        mederfont = pg.font.Font(getfilepath('Iceland-Regular.ttf'), 70)
+        medfont = pg.font.Font(getfilepath('Iceland-Regular.ttf'), 100)
+        largefont = pg.font.Font(getfilepath('Iceland-Regular.ttf'), 120)
         if size == "smaller":
                 textSurface = smallerfont.render(text,True,color)
         elif size == "small":
@@ -421,13 +431,13 @@ class Game:
                             gate.clicked = True
                             gate.click_time = now
                             if gate.type == "I":
-                                gate.image = pg.image.load('resources/Igate_pressed.png')
+                                gate.image = pg.image.load(getfilepath('Igate_pressed.png'))
                             elif gate.type == "X":
-                                gate.image = pg.image.load('resources/Xgate_pressed.png')
+                                gate.image = pg.image.load(getfilepath('Xgate_pressed.png'))
                             elif gate.type == "H":
-                                gate.image = pg.image.load('resources/Hgate_pressed.png')
+                                gate.image = pg.image.load(getfilepath('Hgate_pressed.png'))
                             elif gate.type == "K":
-                                gate.image = pg.image.load('resources/CXgate_pressed.png')
+                                gate.image = pg.image.load(getfilepath('CXgate_pressed.png'))
 
 
                         for gap in self.gaps_group:
@@ -519,7 +529,7 @@ class Game:
         pass
     # if win display congrats and ask to play again
     def play_again_win(self):
-        bigfont = pg.font.SysFont('Iceland', 80)
+        bigfont = pg.font.Font(getfilepath('Iceland-Regular.ttf'), 80)
         text = bigfont.render('Congrats!', 13, PURPLE)
         text2 = bigfont.render('Press space to continue', 13, PURPLE)
         textx = WIDTH / 2 - text.get_width() / 2
@@ -552,7 +562,7 @@ class Game:
     # if lose repeat as above but display lose
     def play_again_lose(self):
             self.screen.fill(WHITE)
-            bigfont = pg.font.SysFont('Iceland', 80)
+            bigfont = pg.font.Font(getfilepath('Iceland-Regular.ttf'), 80)
             text = bigfont.render('You lose!', 13, PURPLE)
             text2 = bigfont.render('Press space to play again', 13, PURPLE)
             textx = WIDTH / 2 - text.get_width() / 2
@@ -590,7 +600,7 @@ class Game:
             play_again=True
             while play_again:
                 self.screen.fill(WHITE)
-                bigfont = pg.font.SysFont('Iceland', 80)
+                bigfont = pg.font.Font(getfilepath('Iceland-Regular.ttf'), 80)
                 text = bigfont.render('You lose!', 13, PURPLE)
                 text2 = bigfont.render('Press space to play again', 13, PURPLE)
                 textx = WIDTH / 2 - text.get_width() / 2
