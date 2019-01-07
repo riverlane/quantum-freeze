@@ -1,4 +1,5 @@
 import threading
+import requests
 from queue import Queue
 from pyquil.api import get_qc
 from pyquil.quil import Program, address_qubits
@@ -24,8 +25,17 @@ class QThread(threading.Thread):
         self.simulator = sim
         self.qc = get_qc("9q-square-qvm")
         self.qubits = None
-        # self.compprocess = sp.Popen(["quilc", "-S"], close_fds=True)
-        # self.servprocess = sp.Popen(["qvm", "-S"], close_fds=True)
+        try:
+            requests.get("http://localhost:5000/")
+        except ConnectionError:
+            self.ExistingQVM = False
+        else:
+            self.ExistingQVM = True
+        
+        
+        if not self.ExistingQVM:
+            self.compprocess = sp.Popen(["quilc", "-S"], close_fds=True)
+            self.servprocess = sp.Popen(["qvm", "-S"], close_fds=True)
 
 
     def run(self):
@@ -83,5 +93,6 @@ class QThread(threading.Thread):
         self.queue.put((None, callback))
 
     def quit(self):
-        self.compprocess.terminate()
-        self.servprocess.terminate()
+        if not self.ExistingQVM:
+            self.compprocess.terminate()
+            self.servprocess.terminate()
