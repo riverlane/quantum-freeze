@@ -12,6 +12,7 @@ from sprites import *
 from pyquil_requests import QThread
 from os import path
 
+DEBUG =  False
 LEVELS = 3
 
 # define some colors (R, G, B)
@@ -73,18 +74,18 @@ class Game:
 
     def game_intro(self):
         intro = True
-        print("loading bg")
+        if DEBUG: print("loading bg")
         background_image = pg.image.load('resources/snow_scene.png')
-        print("scale bg")
+        if DEBUG: print("scale bg")
         background_image = pg.transform.scale(background_image, (1200, 774))
         while intro:
-            print("blitting")
+            if DEBUG: print("blitting")
             self.screen.blit(background_image, [-5, -5])
 
-            print("messages")
+            if DEBUG: print("messages")
             self.message_to_screen("The Quantum Freeze",PURPLE,(WIDTH/2),(HEIGHT/2)-100,size="large")
             self.message_to_screen("Press space to play", BLACK, (WIDTH/2),(HEIGHT/2)+80)
-            print("wait for event")
+            if DEBUG: print("wait for event")
             for event in pg.event.get():
                 if event.type == pg.QUIT:
                     pg.quit()
@@ -125,18 +126,18 @@ class Game:
 
 
     def message_to_screen(self,msg, color,pos_x,pos_y, size="small",corner = "center"):
-        print("print msg, get text obj")
+        if DEBUG: print("print msg, get text obj")
         textSurf, textRect = self.text_objects(msg, color, size)
         if corner =="left":
             textRect.x = pos_x
             textRect.y = pos_y
         else:
             textRect.center = pos_x,pos_y
-        print("blitting in msg_to_screen")
+        if DEBUG: print("blitting in msg_to_screen")
         self.screen.blit(textSurf, textRect)
 
     def text_objects(self,text, color, size):
-        print("getting fornts")
+        if DEBUG: print("getting fornts")
         smallerfont = pg.font.Font("resources/Iceland-Regular.ttf", 37)
         smallfont = pg.font.Font("resources/Iceland-Regular.ttf", 50)
         mederfont = pg.font.Font("resources/Iceland-Regular.ttf", 70)
