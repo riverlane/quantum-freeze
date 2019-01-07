@@ -1,6 +1,19 @@
 import pygame as pg
 from collections import deque
 import pytmx
+
+import os, sys
+
+is_frozen = getattr(sys, 'frozen', False)
+frozen_temp_path = getattr(sys, '_MEIPASS', '')
+# This is needed to find resources when using pyinstaller
+if is_frozen:
+    basedir = frozen_temp_path
+else:
+    basedir = os.path.dirname(os.path.abspath(__file__))
+def getfilepath(fname):
+    return basedir + "/resources/" + fname
+
 # define some colors (R, G, B)
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
@@ -57,7 +70,7 @@ class Player(pg.sprite.Sprite):
 
         pg.sprite.Sprite.__init__(self, self.groups)
         self.game = game
-        self.image = pg.image.load('resources/penguin.png')
+        self.image = pg.image.load(getfilepath('penguin.png'))
         self.image = pg.transform.scale(self.image, (TILESIZE, TILESIZE))
 
         self.rect = self.image.get_rect()
@@ -100,7 +113,7 @@ class Play_button(pg.sprite.Sprite):
         self.groups = game.all_sprites
         pg.sprite.Sprite.__init__(self, self.groups)
         self.game = game
-        self.image = pg.image.load('resources/play_but.png')
+        self.image = pg.image.load(getfilepath('play_but.png'))
         half_size= int(1.5*TILESIZE)
         self.image = pg.transform.scale(self.image,(half_size,half_size))
         self.rect = self.image.get_rect()
@@ -119,7 +132,7 @@ class Gaps(pg.sprite.Sprite):
             self.groups = game.all_sprites, game.gaps_group
             pg.sprite.Sprite.__init__(self, self.groups)
 
-            self.image = pg.image.load('resources/gap_gate.png')
+            self.image = pg.image.load(getfilepath('gap_gate.png'))
 
             self.image = pg.transform.scale(self.image, ( TILESIZE, TILESIZE))
             self.rect = self.image.get_rect()
@@ -146,7 +159,7 @@ class Gates(pg.sprite.Sprite):
             self.groups = game.all_sprites, game.Igroup, game.gate_group
             pg.sprite.Sprite.__init__(self, self.groups)
 
-            self.image = pg.image.load('resources/Igate.png')
+            self.image = pg.image.load(getfilepath('Igate.png'))
 
             self.image = pg.transform.scale(self.image, ( TILESIZE, TILESIZE))
             self.rect = self.image.get_rect()
@@ -156,7 +169,7 @@ class Gates(pg.sprite.Sprite):
         elif type=="X":
             self.groups = game.all_sprites, game.Xgroup, game.gate_group
             pg.sprite.Sprite.__init__(self, self.groups)
-            self.image = pg.image.load('resources/X_gate.png')
+            self.image = pg.image.load(getfilepath('X_gate.png'))
             self.image = pg.transform.scale(self.image, ( TILESIZE, TILESIZE))
 
             self.rect = self.image.get_rect()
@@ -164,14 +177,14 @@ class Gates(pg.sprite.Sprite):
         elif type=="H":
             self.groups = game.all_sprites, game.Hgroup, game.gate_group
             pg.sprite.Sprite.__init__(self, self.groups)
-            self.image = pg.image.load('resources/H_gate.png')
+            self.image = pg.image.load(getfilepath('H_gate.png'))
             self.image = pg.transform.scale(self.image, (TILESIZE, TILESIZE))
             self.rect = self.image.get_rect()
             self.type = "H"
         elif type=="K":
             self.groups = game.all_sprites, game.Hgroup, game.gate_group
             pg.sprite.Sprite.__init__(self, self.groups)
-            self.image = pg.image.load('resources/CX_gate.png')
+            self.image = pg.image.load(getfilepath('CX_gate.png'))
             self.image = pg.transform.scale(self.image, (TILESIZE, TILESIZE))
             self.rect = self.image.get_rect()
             self.type = "K"
@@ -195,7 +208,7 @@ class Qubits(pg.sprite.Sprite):
     def __init__(self,game,number,x,y):
         self.groups = game.all_sprites, game.all_qubits
         pg.sprite.Sprite.__init__(self, self.groups)
-        self.image = pg.image.load('resources/tesseract.png')
+        self.image = pg.image.load(getfilepath('tesseract.png'))
         self.image = pg.transform.scale(self.image, (TILESIZE, TILESIZE))
         #self.image = pg.transform.rotate(self.image,45)
         self.rect = self.image.get_rect()
@@ -221,7 +234,7 @@ class circ(pg.sprite.Sprite): #wires along which qubits move
         self.groups = game.all_sprites
         pg.sprite.Sprite.__init__(self, self.groups)
         self.game = game
-        self.image = pg.image.load('resources/circuit background.png')
+        self.image = pg.image.load(getfilepath('circuit background.png'))
         self.rect = self.image.get_rect()
         self.x = x
         self.y = y
@@ -233,7 +246,7 @@ class Wire(pg.sprite.Sprite): #wires along which qubits move
         self.groups = game.all_sprites, game.wires
         pg.sprite.Sprite.__init__(self, self.groups)
         self.game = game
-        self.image = pg.image.load('resources/wire.png')
+        self.image = pg.image.load(getfilepath('wire.png'))
         wire_width = int(TILESIZE/8)
         self.image = pg.transform.scale(self.image,(TILESIZE,wire_width))
 
@@ -248,7 +261,7 @@ class Background2(pg.sprite.Sprite): #background tiles for frozen lake
                 self.groups = game.all_sprites, game.backgrounds
                 pg.sprite.Sprite.__init__(self, self.groups)
                 self.game = game
-                self.image = pg.image.load('resources/ice_tile.png')
+                self.image = pg.image.load(getfilepath('ice_tile.png'))
                 self.image = pg.transform.scale(self.image, (2*TILESIZE, 2*TILESIZE))
                 self.rect = self.image.get_rect()
                 #self.image = pg.Surface((TILESIZE, TILESIZE ))
@@ -266,7 +279,7 @@ class Background(pg.sprite.Sprite): #background tiles for frozen lake
                 pg.sprite.Sprite.__init__(self, self.groups)
                 self.game = game
                 self.rect = pg.Rect(x,y,w,h)
-                self.image = pg.image.load('resources/ice_tile.png')
+                self.image = pg.image.load(getfilepath('ice_tile.png'))
 
                 #self.image = pg.Surface((TILESIZE, TILESIZE ))
                 #self.image.fill(WHITE)
@@ -282,7 +295,7 @@ class Hole(pg.sprite.Sprite):  # background tiles for frozen lake
             self.groups =  game.holes
             pg.sprite.Sprite.__init__(self, self.groups)
             self.game = game
-            self.image = pg.image.load('resources/icy hole.png')
+            self.image = pg.image.load(getfilepath('icy hole.png'))
             self.image = pg.transform.scale(self.image, (2 * TILESIZE, 2 * TILESIZE))
             self.rect = self.image.get_rect()
             # self.image = pg.Surface((TILESIZE, TILESIZE ))
@@ -299,7 +312,7 @@ class Igloo(pg.sprite.Sprite): # victory endpoints
                 self.groups = game.all_sprites, game.backgrounds, game.igloos
                 pg.sprite.Sprite.__init__(self, self.groups)
                 self.game = game
-                self.image = pg.image.load('resources/igloo.png')
+                self.image = pg.image.load(getfilepath('igloo.png'))
                 height_img = int(1.5*TILESIZE)
                 self.image = pg.transform.scale(self.image, (2*TILESIZE-16, height_img))
                 self.rect = self.image.get_rect()

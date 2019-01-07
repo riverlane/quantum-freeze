@@ -1,16 +1,5 @@
 #!/usr/bin/env python3
 import pygame as pg
-import os, sys
-
-is_frozen = getattr(sys, 'frozen', False)
-frozen_temp_path = getattr(sys, '_MEIPASS', '')
-# This is needed to find resources when using pyinstaller
-if is_frozen:
-    basedir = frozen_temp_path
-else:
-    basedir = os.path.dirname(os.path.abspath(__file__))
-def getfilepath(fname):
-    return basedir + "/resources/" + fname
 
 import numpy
 from collections import defaultdict, OrderedDict
@@ -18,7 +7,7 @@ from math import copysign
 import pytmx
 import time
 
-from sprites import *
+from sprites import * # also has getfilepath
 from pyquil_requests import QThread
 from os import path
 
