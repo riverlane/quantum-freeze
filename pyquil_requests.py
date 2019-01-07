@@ -27,12 +27,12 @@ class QThread(threading.Thread):
         self.qubits = None
         try:
             requests.get("http://localhost:5000/")
-        except ConnectionError:
+        except requests.exceptions.ConnectionError:
             self.ExistingQVM = False
         else:
             self.ExistingQVM = True
-        
-        
+
+
         if not self.ExistingQVM:
             self.compprocess = sp.Popen(["quilc", "-S"], close_fds=True)
             self.servprocess = sp.Popen(["qvm", "-S"], close_fds=True)
