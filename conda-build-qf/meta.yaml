@@ -1,0 +1,12 @@
+package:
+  name: quantumfreeze
+  version: 0.2.2
+
+build:
+  number: 1
+  script: cp $RECIPE_DIR/../quantum-freeze $PREFIX/bin/quantumfreeze && chmod +x $PREFIX/bin/quantumfreeze
+
+about:
+  home: https://github.com/riverlane/quantum-freeze
+  license: GPLv3
+  license_file:
