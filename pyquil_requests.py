@@ -6,6 +6,7 @@ from pyquil.quil import Program, address_qubits
 from pyquil.gates import RESET
 
 from bitarray import bitarray
+import os
 
 sim=True
 import subprocess as sp
@@ -25,17 +26,22 @@ class QThread(threading.Thread):
         self.simulator = sim
         self.qc = get_qc("9q-square-qvm")
         self.qubits = None
-        try:
-            requests.get("http://localhost:5000/")
-        except requests.exceptions.ConnectionError:
-            self.ExistingQVM = False
-        else:
+
+        self.QCS = os.path.isfile("/home/forest/.forest_config")
+
+        if self.QCS:
             self.ExistingQVM = True
+        else:
+            try:
+                requests.get("http://localhost:5000/")
+            except requests.exceptions.ConnectionError:
+                self.ExistingQVM = False
+            else:
+                self.ExistingQVM = True
 
-
-        if not self.ExistingQVM:
-            self.compprocess = sp.Popen(["quilc", "-S"], close_fds=True)
-            self.servprocess = sp.Popen(["qvm", "-S"], close_fds=True)
+            if not self.ExistingQVM:
+                self.compprocess = sp.Popen(["quilc", "-S"], close_fds=True)
+                self.servprocess = sp.Popen(["qvm", "-S"], close_fds=True)
 
 
     def run(self):
