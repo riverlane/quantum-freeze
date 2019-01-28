@@ -13,6 +13,13 @@ If you are using OSX or Windows, you will need a X server. On OSX you may want t
 
 If you do not have a X server, `quantumfreeze` will report that is was unable to find a display. This can also be caused by omitting the `-X` flag.
 
+## Local installation on Linux
+
+1. Install local verions of the quil compiler and VM from http://rigetti.com/forest. Ensure you can launch `qvm` and `quilc` from the command line.
+2. Install anaconda or miniconda from https://www.anaconda.com/. Ensure you can use the `conda` command.
+3. Run `conda install -c riverlane quantumfreeze`.
+5. Run `quantumfreeze`!
+
 ## Playing the game
 
 Your objective is the guide the penguin to his home in the igloo! The final bitstring that the circuit produces when measured gives them their instructions. A 0 will guide the penguin left, and 1 guides them down. Place gates onto the circuit in the bottom left to give your guidance.
