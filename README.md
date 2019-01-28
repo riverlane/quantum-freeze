@@ -4,9 +4,10 @@ Safely navigate your penguin across a frozen lake avoiding the hidden holes! You
 ## Installation on QCS
 
 0. (for Linux) SSH into your QCS box using `ssh -X -p 22 forest@YOUR_QCS`. `-X` is needed to activate X forwarding and display the game on your local computer.
-1. Activate the base conda environment with `conda activate`
-2. Install the game with `conda install -c riverlane quantumfreeze`
-5. Run `quantumfreeze`!
+1. Install a required support package for graphical applications on the QCS with `yum install xorg-x11-xauth`.
+2. Activate the base conda environment with `conda activate`
+3. Install the game with `conda install -c riverlane quantumfreeze`
+4. Run `quantumfreeze`!
 
 If you are using OSX or Windows, you will need a X server. On OSX you may want to use [XQuartz](https://www.xquartz.org/). Windows users can switch to using Windows Subsystem for Linux (WSL) or the Xming server, but support is not provided.
 
